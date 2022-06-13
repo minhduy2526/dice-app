@@ -1,0 +1,23 @@
+.component {
+  position: absolute;
+  font-size: 45px;
+  background-color: #516ced;
+  border: 4px solid #53e96f;
+  border-radius: 8px;
+  width: 150px;
+  height: 150px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  filter: brightness(90%);
+}
+
+.component:hover {
+  filter: brightness(100%);
+}
+
+.selected {
+  filter: brightness(100%);
+}
