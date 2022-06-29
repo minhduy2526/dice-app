@@ -1,108 +1,75 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { getSelectedState } from "../reducers/diceAppReducer";
+import cn from "classnames";
 import one from "../img/1.png";
 import two from "../img/2.png";
 import three from "../img/3.png";
-import four from "../img/4.png";
-import five from "../img/5.png";
-import six from "../img/6.png";
 import "./body.css";
 
-class Body extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    const { onGetSelected } = this.props;
-
-    return (
-      <div style={{ height: 200 }} className="d-flex">
+const Body = () => {
+  const { selectedState } = useSelector((state) => state.diceapp);
+  const dispatch = useDispatch();
+  const handleGetState = (isSelectedState) => {
+    dispatch(getSelectedState(isSelectedState));
+  };
+  return (
+    <div style={{ height: 200 }} className="d-flex">
+      <div
+        style={{ position: "relative" }}
+        className="p-2 flex-fill"
+        onClick={() => handleGetState("HIGH")}
+      >
         <div
           id="high"
-          onClick={() => onGetSelected("TÀI")}
-          style={{ position: "relative" }}
-          className="p-2 flex-fill"
-        >
-          <div
-            style={{
-              right: 10,
-            }}
-            className="text-white component"
-          >
-            TÀI
-          </div>
-        </div>
-        <div
           style={{
-            marginTop: 15,
+            right: 10,
           }}
-          className="p-2 flex-fill"
+          // className="text-white component"
+          className={cn("text-white component", {
+            selected: selectedState === "TÀI",
+          })}
         >
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-            }}
-            className="container"
-          >
-            <img
-              className="mx-1"
-              src={one}
-              alt="one"
-              width={80}
-              height={80}
-            ></img>
-            <img
-              className="mx-1"
-              src={two}
-              alt="two"
-              width={80}
-              height={80}
-            ></img>
-            <img
-              className="mx-1"
-              src={three}
-              alt="three"
-              width={80}
-              height={80}
-            ></img>
-          </div>
-        </div>
-
-        <div
-          id="low"
-          onClick={() => onGetSelected("XỈU")}
-          style={{ position: "relative" }}
-          className="p-2 flex-fill"
-        >
-          <div
-            style={{
-              left: 10,
-            }}
-            className="text-white component"
-          >
-            XỈU
-          </div>
+          TÀI
         </div>
       </div>
-    );
-  }
-}
+      <div
+        style={{
+          marginTop: 15,
+        }}
+        className="p-2 flex-fill"
+      >
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            width: "50%",
+            height: 100,
+          }}
+          className="container bg-light"
+        >
+          <img className="mt-2 mx-2" src={one} alt="one" width={80} height={80}></img>
+          <img className="mt-2 mx-2" src={two} alt="two" width={80} height={80}></img>
+          <img className="mt-2 mx-2" src={three} alt="three" width={80} height={80}></img>
+        </div>
+      </div>
 
-const mapStateToProps = (state) => {
-  return {
-    state: state.selected,
-  };
+      <div id="low" style={{ position: "relative" }} className="p-2 flex-fill">
+        <div
+          style={{
+            left: 10,
+          }}
+          // className="text-white component"
+          className={cn("text-white component", {
+            selected: selectedState === "XỈU",
+          })}
+          onClick={() => handleGetState("LOW")}
+        >
+          XỈU
+        </div>
+      </div>
+    </div>
+  );
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    onGetSelected: (stateSelected) => {
-      const action = { type: "GET_SELECTED", stateSelected };
-      dispatch(action);
-    },
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Body);
+export default Body;

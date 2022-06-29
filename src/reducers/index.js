@@ -1,8 +1,8 @@
 import { combineReducers } from "redux";
-import getSelectedReducer from "./getSelectedReducer";
+import diceAppReducer from "./diceAppReducer";
 
 const rootReducer = combineReducers({
-    selected: getSelectedReducer,
+  diceapp: diceAppReducer,
 });
 
 export default rootReducer;
